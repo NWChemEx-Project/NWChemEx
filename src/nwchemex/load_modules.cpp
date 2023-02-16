@@ -19,6 +19,7 @@
 #include "nwchemex/load_modules.hpp"
 #include <integrals/integrals.hpp>
 // #include <mp2/mp2.hpp>
+#include <casscf/casscf.hpp>
 #include <scf/scf.hpp>
 
 namespace {
@@ -40,6 +41,15 @@ void set_scf_default_modules(pluginplay::ModuleManager& mm) {
     mm.change_submod("SCF Step", "Overlap", "Overlap");
     mm.change_submod("DIIS Fock Matrix", "Overlap", "Overlap");
     mm.change_submod("SCFDIIS Step", "Overlap", "Overlap");
+}
+
+void set_casscf_default_modules(pluginplay::ModuleManager& mm) {
+    mm.change_submod("Transformed Electronic Hamiltonian", "Transformed ERIs",
+                     "Transformed ERI4");
+    mm.change_submod("Transformed Electronic Hamiltonian",
+                     "Transformed Kinetic", "Transformed Kinetic");
+    mm.change_submod("Transformed Electronic Hamiltonian",
+                     "Transformed Nuclear", "Transformed Nuclear");
 }
 
 // Uncomment once MP2 is working again
@@ -109,6 +119,7 @@ void load_modules(pluginplay::ModuleManager& mm) {
     integrals::load_modules(mm);
     scf::load_modules(mm);
     // mp2::load_modules(mm);
+    casscf::load_modules(mm);
 
     drivers::load_modules(mm);
 
@@ -119,6 +130,7 @@ void load_modules(pluginplay::ModuleManager& mm) {
 
     set_integrals_default_modules(mm);
     set_scf_default_modules(mm);
+    set_casscf_default_modules(mm);
     // set_mp2_default_modules(mm);
 
     set_defaults(mm);
